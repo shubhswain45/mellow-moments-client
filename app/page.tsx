@@ -1,11 +1,28 @@
 "use client";
-import { Box, Flex, Button, Stack, Text } from "@chakra-ui/react";
+import Login from "@/components/auth/Login";
+import Signup from "@/components/auth/Signup"; // Ensure this path is correct
+import { useLoginWithGoogle } from "@/hooks/auth";
+import { Box, Flex, Button, Stack, Text, useDisclosure } from "@chakra-ui/react";
 import { CredentialResponse, GoogleLogin } from "@react-oauth/google";
 
 export default function Home() {
+  const {
+    isOpen: isSignupOpen,
+    onOpen: onSignupOpen,
+    onClose: onSignupClose,
+  } = useDisclosure(); // Manage signup modal state
+
+  const {
+    isOpen: isLoginOpen,
+    onOpen: onLoginOpen,
+    onClose: onLoginClose,
+  } = useDisclosure(); // Manage login modal state
+
+  const {mutate: loginWithGoogle} = useLoginWithGoogle()
+
   const handleLoginSuccess = (cred: CredentialResponse) => {
     console.log(cred);
-    // Handle the success response here (e.g., redirecting or updating state)
+    loginWithGoogle(cred.credential || "")
   };
 
   const handleLoginFailure = (error: any) => {
@@ -14,12 +31,7 @@ export default function Home() {
   };
 
   return (
-    <Flex
-      minHeight="100vh"
-      alignItems="center"
-      justifyContent="center"
-      padding="4"
-    >
+    <Flex minHeight="100vh" alignItems="center" justifyContent="center" padding="4">
       <Flex
         maxWidth="800px"
         width="100%"
@@ -29,13 +41,7 @@ export default function Home() {
         direction={{ base: "column", md: "row" }}
       >
         {/* Left Hand Side - Logo */}
-        <Box
-          flex="1"
-          display="flex"
-          alignItems="center"
-          justifyContent="center"
-          padding="8"
-        >
+        <Box flex="1" display="flex" alignItems="center" justifyContent="center" padding="8">
           <Text
             fontSize="7xl"
             fontWeight="bold"
@@ -43,7 +49,7 @@ export default function Home() {
             bgClip="text"
             fontFamily="'Dancing Script', cursive" // Example cursive font
           >
-            Mellow Moment
+            Mellow Moments
           </Text>
         </Box>
 
@@ -52,9 +58,7 @@ export default function Home() {
           <Box width="100%" maxWidth="400px">
             <Stack spacing="4">
               {/* Google Login Button */}
-              <GoogleLogin
-                onSuccess={handleLoginSuccess}
-              />
+              <GoogleLogin onSuccess={handleLoginSuccess} />
 
               <Text textAlign="center" marginY="4" color="gray.500">
                 -------------------- or --------------------
@@ -66,9 +70,11 @@ export default function Home() {
                 width="100%"
                 borderRadius="full"
                 textColor={"white"}
+                onClick={onSignupOpen} // Open the signup modal
               >
                 Create Account
               </Button>
+
               <Text fontSize={"xs"}>
                 By signing up, you agree to the Terms of Service and Privacy Policy, including Cookie Use.
               </Text>
@@ -82,6 +88,7 @@ export default function Home() {
                 border={"1px solid white"}
                 textColor={"#2b4f78"}
                 mt={-5}
+                onClick={onLoginOpen} // Open the login modal
               >
                 Sign In
               </Button>
@@ -89,6 +96,11 @@ export default function Home() {
           </Box>
         </Box>
       </Flex>
+
+      {/* Signup Modal Component */}
+      <Signup isOpen={isSignupOpen} onClose={onSignupClose} /> {/* Pass props to Signup modal */}
+      {/* Login Modal Component */}
+      <Login isOpen={isLoginOpen} onClose={onLoginClose} /> {/* Pass props to Login modal */}
     </Flex>
   );
 }

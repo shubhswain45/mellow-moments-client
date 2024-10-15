@@ -3,6 +3,8 @@ import localFont from "next/font/local";
 import "./globals.css";
 import { ChakraProviders } from "@/providers/ChakraProvider";
 import { GoogleOAuthProviders } from "@/providers/GoogleOAuthProviders";
+import { QueryClientProviders } from "@/providers/QueryClientProviders";
+import { Toaster } from "react-hot-toast";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -31,9 +33,12 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <ChakraProviders>
-          <GoogleOAuthProviders>
-          {children}
-          </GoogleOAuthProviders>
+          <QueryClientProviders>
+            <GoogleOAuthProviders>
+              {children}
+              <Toaster/>
+            </GoogleOAuthProviders>
+          </QueryClientProviders>
         </ChakraProviders>
       </body>
     </html>
