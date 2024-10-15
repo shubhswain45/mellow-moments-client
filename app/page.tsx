@@ -25,11 +25,6 @@ export default function Home() {
     loginWithGoogle(cred.credential || "")
   };
 
-  const handleLoginFailure = (error: any) => {
-    console.error(error);
-    // Handle login failure (e.g., show an error message)
-  };
-
   return (
     <Flex minHeight="100vh" alignItems="center" justifyContent="center" padding="4">
       <Flex
