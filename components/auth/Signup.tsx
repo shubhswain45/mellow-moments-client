@@ -13,85 +13,123 @@ import {
     FormLabel,
     Input,
     Stack,
-    Text,
+    InputGroup,
+    InputRightElement,
+    IconButton
 } from '@chakra-ui/react';
+import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
+import { useSignup } from '@/hooks/auth';
 
 const Signup = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => void; }) => {
-    const [step, setStep] = useState(1); // Step to manage the form view
-    const [verificationCode, setVerificationCode] = useState(''); // State for the verification code
+    const [formData, setFormData] = useState({
+        username: '',
+        fullName: '',
+        email: '',
+        password: '',
+    });
+    const [showPassword, setShowPassword] = useState(false);
 
-    const handleSignup = (event: React.FormEvent) => {
+    const { mutate: signup, isPending } = useSignup();
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const { name, value } = e.target;
+        setFormData((prevData) => ({
+            ...prevData,
+            [name]: value,
+        }));
+    };
+
+    const handleSignup = async (event: React.FormEvent) => {
         event.preventDefault();
-        
-        if (step === 1) {
-            // Handle signup logic here, e.g., send data to the server
-            setStep(2); // Move to the next step (Verify Email)
-        } else {
-            // Handle verification logic here, e.g., verify the code
-            console.log("Verification Code:", verificationCode);
-            // If verification is successful, proceed (you can call an API or perform any logic here)
-            onClose(); // Close modal after successful verification
-        }
+        signup(formData);
     };
 
     return (
-        <Modal isOpen={isOpen} onClose={onClose} size="md" closeOnOverlayClick={false}> {/* Disable closing on overlay click */}
+        <Modal isOpen={isOpen} onClose={onClose} size="md" closeOnOverlayClick={false}>
             <ModalOverlay />
-            <ModalContent bg="#1c1c1b" color="white">
-                <ModalHeader>{step === 1 ? "Create your account" : "Verify your email"}</ModalHeader>
+            <ModalContent bg="#161617" color="white">
+                <ModalHeader>Create your account</ModalHeader>
                 <ModalCloseButton />
-                <ModalBody overflowY="auto" maxHeight="60vh"> {/* Add scrollbar */}
-                    {step === 1 ? (
-                        <form onSubmit={handleSignup}>
-                            <Stack spacing={4} p={7}>
-                                <FormControl mb={4} isRequired>
-                                    <FormLabel htmlFor="username">Username</FormLabel>
-                                    <Input id="username" placeholder="Enter your username" bg="#2a2a29" color="white" />
-                                </FormControl>
-                                <FormControl mb={4} isRequired>
-                                    <FormLabel htmlFor="fullname">Full Name</FormLabel>
-                                    <Input id="fullname" placeholder="Enter your full name" bg="#2a2a29" color="white" />
-                                </FormControl>
-                                <FormControl mb={4} isRequired>
-                                    <FormLabel htmlFor="email">Email</FormLabel>
-                                    <Input type="email" id="email" placeholder="Enter your email" bg="#2a2a29" color="white" />
-                                </FormControl>
-                                <FormControl mb={4} isRequired>
-                                    <FormLabel htmlFor="password">Password</FormLabel>
-                                    <Input type="password" id="password" placeholder="Enter your password" bg="#2a2a29" color="white" />
-                                </FormControl>
-                                {/* Add more fields as needed */}
-                            </Stack>
-                        </form>
-                    ) : (
+                <ModalBody overflowY="auto" maxHeight="60vh">
+                    <form onSubmit={handleSignup}>
                         <Stack spacing={4} p={7}>
-                            <Text fontSize="lg" textAlign="center">
-                                A verification email has been sent to your email address. Please enter the verification code below:
-                            </Text>
                             <FormControl mb={4} isRequired>
-                                <FormLabel htmlFor="verificationCode">Verification Code</FormLabel>
+                                <FormLabel htmlFor="username">Username</FormLabel>
                                 <Input 
-                                    id="verificationCode" 
-                                    placeholder="Enter verification code" 
-                                    bg="#2a2a29" 
+                                    id="username"
+                                    name="username"
+                                    placeholder="Enter your username"
+                                    bg="#2a2a29"
                                     color="white"
-                                    value={verificationCode}
-                                    onChange={(e) => setVerificationCode(e.target.value)} // Update verification code state
+                                    value={formData.username}
+                                    onChange={handleChange}
                                 />
                             </FormControl>
+                            <FormControl mb={4} isRequired>
+                                <FormLabel htmlFor="fullname">Full Name</FormLabel>
+                                <Input 
+                                    id="fullname"
+                                    name="fullName"
+                                    placeholder="Enter your full name"
+                                    bg="#2a2a29"
+                                    color="white"
+                                    value={formData.fullName}
+                                    onChange={handleChange}
+                                />
+                            </FormControl>
+                            <FormControl mb={4} isRequired>
+                                <FormLabel htmlFor="email">Email</FormLabel>
+                                <Input 
+                                    type="email"
+                                    id="email"
+                                    name="email"
+                                    placeholder="Enter your email"
+                                    bg="#2a2a29"
+                                    color="white"
+                                    value={formData.email}
+                                    onChange={handleChange}
+                                />
+                            </FormControl>
+                            <FormControl mb={4} isRequired>
+                                <FormLabel htmlFor="password">Password</FormLabel>
+                                <InputGroup>
+                                    <Input 
+                                        type={showPassword ? "text" : "password"} 
+                                        id="password"
+                                        name="password"
+                                        placeholder="Enter your password"
+                                        bg="#2a2a29"
+                                        color="white"
+                                        value={formData.password}
+                                        onChange={handleChange}
+                                    />
+                                    <InputRightElement>
+                                        <IconButton
+                                            aria-label={showPassword ? "Hide password" : "Show password"}
+                                            icon={showPassword ? <ViewOffIcon /> : <ViewIcon />}
+                                            onClick={() => setShowPassword(!showPassword)}
+                                            bg="transparent"
+                                            _hover={{ bg: "transparent" }}
+                                            size="sm"
+                                        />
+                                    </InputRightElement>
+                                </InputGroup>
+                            </FormControl>
                         </Stack>
-                    )}
+                    </form>
                 </ModalBody>
-                <ModalFooter>
+                <ModalFooter bg="#111827">
                     <Button
-                        bg={"#e1e3e2"}
-                        textColor={"black"}
-                        onClick={handleSignup} // On click, handle signup or verification logic
+                        bg="#e1e3e2"
+                        textColor="black"
+                        onClick={handleSignup}
                         w="100%"
-                        borderRadius="full" // Makes the button fully rounded
+                        borderRadius="full"
                         _hover={{ bg: "#c2c2c2" }}
+                        isLoading={isPending}
+                        disabled={isPending}
                     >
-                        {step === 1 ? "Next" : "Verify"} {/* Change button text based on step */}
+                        Sign Up
                     </Button>
                 </ModalFooter>
             </ModalContent>

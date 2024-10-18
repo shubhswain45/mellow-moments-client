@@ -1,5 +1,5 @@
-"use client"
-import React from 'react';
+"use client";
+import React, { useState } from 'react';
 import {
     Modal,
     ModalOverlay,
@@ -13,30 +13,52 @@ import {
     FormLabel,
     Input,
     Stack,
+    InputGroup,
+    InputRightElement,
+    IconButton,
     Text
 } from '@chakra-ui/react';
+import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
 import { CredentialResponse, GoogleLogin } from '@react-oauth/google';
+import Link from 'next/link';
+import { useLogin } from '@/hooks/auth';
 
 const Login = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => void; }) => {
-    const handleLogin = (event: React.FormEvent) => {
+    const [formData, setFormData] = useState({
+        emailOrUsername: '',
+        password: '',
+    });
+    const [showPassword, setShowPassword] = useState(false);
+
+    const { mutate: login, isPending } = useLogin();
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const { name, value } = e.target;
+        setFormData((prevData) => ({
+            ...prevData,
+            [name]: value,
+        }));
+    };
+
+    const handleLogin = async (event: React.FormEvent) => {
         event.preventDefault();
-        // Handle signup logic here
+        login(formData);
     };
 
     const handleLoginSuccess = (cred: CredentialResponse) => {
         console.log(cred);
-        // Handle the success response here (e.g., redirecting or updating state)
+        // Handle successful Google login (e.g., saving tokens)
     };
 
     return (
         <Modal isOpen={isOpen} onClose={onClose} size="md" closeOnOverlayClick={false}>
             <ModalOverlay />
-            <ModalContent bg="#1c1c1b" color="white">
+            <ModalContent bg="#161617" color="white">
                 <ModalHeader>Sign in to Mellow-moments</ModalHeader>
                 <ModalCloseButton />
-                <ModalBody overflowY="auto" maxHeight="60vh"> {/* Add scrollbar */}
+                <ModalBody overflowY="auto" maxHeight="60vh">
                     <form onSubmit={handleLogin}>
-                        <Stack spacing={4} p={7}>
+                        <Stack spacing={4} p={7} align="center">
                             <GoogleLogin onSuccess={handleLoginSuccess} />
 
                             <Text textAlign="center" marginY="4" color="gray.500">
@@ -44,29 +66,71 @@ const Login = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => void; }) =
                             </Text>
 
                             <FormControl mb={4} isRequired>
-                                <FormLabel htmlFor="username">Username</FormLabel>
-                                <Input id="username" placeholder="Enter your username" bg="#2a2a29" color="white" />
+                                <FormLabel htmlFor="emailOrUsername">Email or Username</FormLabel>
+                                <Input
+                                    id="emailOrUsername"
+                                    name="emailOrUsername"
+                                    placeholder="Email or Username"
+                                    bg="#2a2a29"
+                                    color="white"
+                                    value={formData.emailOrUsername}
+                                    onChange={handleChange}
+                                />
                             </FormControl>
                             <FormControl mb={4} isRequired>
                                 <FormLabel htmlFor="password">Password</FormLabel>
-                                <Input type="password" id="password" placeholder="Enter your password" bg="#2a2a29" color="white" />
+                                <InputGroup>
+                                    <Input
+                                        type={showPassword ? "text" : "password"}
+                                        id="password"
+                                        name="password"
+                                        placeholder="Enter your password"
+                                        bg="#2a2a29"
+                                        color="white"
+                                        value={formData.password}
+                                        onChange={handleChange}
+                                    />
+                                    <InputRightElement>
+                                        <IconButton
+                                            aria-label={showPassword ? "Hide password" : "Show password"}
+                                            icon={showPassword ? <ViewOffIcon /> : <ViewIcon />}
+                                            onClick={() => setShowPassword(!showPassword)}
+                                            bg="transparent"
+                                            _hover={{ bg: "transparent" }}
+                                            size="sm"
+                                        />
+                                    </InputRightElement>
+                                </InputGroup>
                             </FormControl>
-                            {/* Add more fields as needed */}
+
+                            <Link href="/forgot-password">
+                                <Button
+                                    bg="transparent"
+                                    _hover={{ bg: "rgba(255, 255, 255, 0.1)" }}
+                                    width="300px"
+                                    borderRadius="full"
+                                    border="1px solid white"
+                                    textColor="white"
+                                >
+                                    Forgot password
+                                </Button>
+                            </Link>
                         </Stack>
                     </form>
                 </ModalBody>
-                <ModalFooter>
-                    <Button
-                        bg={"#e1e3e2"}
-                        textColor={"black"}
-                        onClick={handleLogin}
-                        w="100%"
-                        borderRadius="full" // Makes the button fully rounded
-                        _hover={{ bg: "#c2c2c2" }}
-                    >
-                        Login
-                    </Button>
-
+                <ModalFooter bg="#111827">
+                        <Button
+                            bg="#e1e3e2"
+                            textColor="black"
+                            onClick={handleLogin}
+                            w="100%"
+                            borderRadius="full"
+                            _hover={{ bg: "#c2c2c2" }}
+                            isLoading={isPending}
+                            disabled={isPending}
+                        >
+                            Login
+                        </Button>
                 </ModalFooter>
             </ModalContent>
         </Modal>

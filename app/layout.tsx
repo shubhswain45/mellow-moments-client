@@ -5,6 +5,7 @@ import { ChakraProviders } from "@/providers/ChakraProvider";
 import { GoogleOAuthProviders } from "@/providers/GoogleOAuthProviders";
 import { QueryClientProviders } from "@/providers/QueryClientProviders";
 import { Toaster } from "react-hot-toast";
+import LogoProviders from "@/providers/LogoProviders";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -33,12 +34,14 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <ChakraProviders>
-          <QueryClientProviders>
-            <GoogleOAuthProviders>
-              {children}
-              <Toaster/>
-            </GoogleOAuthProviders>
-          </QueryClientProviders>
+          <LogoProviders>
+            <QueryClientProviders>
+              <GoogleOAuthProviders>
+                {children}
+                <Toaster />
+              </GoogleOAuthProviders>
+            </QueryClientProviders>
+          </LogoProviders>
         </ChakraProviders>
       </body>
     </html>

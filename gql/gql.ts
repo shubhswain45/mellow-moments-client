@@ -14,7 +14,14 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
  * Learn more about it here: https://the-guild.dev/graphql/codegen/plugins/presets/preset-client#reducing-bundle-size
  */
 const documents = {
-    "#graphql\n    mutation LoginWithGoogle($token: String!) {\n        loginWithGoogle(token: $token) {\n            id\n            profileImageURL\n            email\n            username\n            fullName\n            isVerified\n        }\n    }\n": types.LoginWithGoogleDocument,
+    "#graphql\n    mutation LoginWithGoogle($token: String!) {\n        loginWithGoogle(token: $token) {\n            id\n            profileImageURL\n            email\n            username\n            fullName\n            isVerified\n        }\n    }    \n": types.LoginWithGoogleDocument,
+    "#graphql\n    mutation Signup($input: SignupUserInput!) {\n        signup(input: $input) {\n            email\n        }\n    }\n": types.SignupDocument,
+    "#graphql\n    mutation Login($input: LoginUserInput!) {\n        login(input: $input) {\n            id\n            profileImageURL\n            email\n            username\n            fullName\n            isVerified\n        }\n    }\n": types.LoginDocument,
+    "#graphql\n    mutation Logout {\n        logout\n    }\n": types.LogoutDocument,
+    "#graphql\n    mutation VerifyEmail($input: VerifyEmailInput!) {\n        verifyEmail(input: $input) {\n            id\n            profileImageURL\n            email\n            username\n            fullName\n            isVerified\n        }\n    }\n": types.VerifyEmailDocument,
+    "#graphql\n    mutation ForgotPassword($input: ForgotPasswordInput!) {\n        forgotPassword(input: $input)\n    }\n": types.ForgotPasswordDocument,
+    "#graphql\n    mutation ResetPassword($input: ResetPasswordInput!){       \n        resetPassword(input: $input)\n    }\n": types.ResetPasswordDocument,
+    "#graphql\n    query GetAuthUser {\n        getAuthUser {\n            id\n            profileImageURL\n            email\n            username\n            fullName\n            isVerified\n        }\n    }\n": types.GetAuthUserDocument,
 };
 
 /**
@@ -34,7 +41,35 @@ export function graphql(source: string): unknown;
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "#graphql\n    mutation LoginWithGoogle($token: String!) {\n        loginWithGoogle(token: $token) {\n            id\n            profileImageURL\n            email\n            username\n            fullName\n            isVerified\n        }\n    }\n"): (typeof documents)["#graphql\n    mutation LoginWithGoogle($token: String!) {\n        loginWithGoogle(token: $token) {\n            id\n            profileImageURL\n            email\n            username\n            fullName\n            isVerified\n        }\n    }\n"];
+export function graphql(source: "#graphql\n    mutation LoginWithGoogle($token: String!) {\n        loginWithGoogle(token: $token) {\n            id\n            profileImageURL\n            email\n            username\n            fullName\n            isVerified\n        }\n    }    \n"): (typeof documents)["#graphql\n    mutation LoginWithGoogle($token: String!) {\n        loginWithGoogle(token: $token) {\n            id\n            profileImageURL\n            email\n            username\n            fullName\n            isVerified\n        }\n    }    \n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "#graphql\n    mutation Signup($input: SignupUserInput!) {\n        signup(input: $input) {\n            email\n        }\n    }\n"): (typeof documents)["#graphql\n    mutation Signup($input: SignupUserInput!) {\n        signup(input: $input) {\n            email\n        }\n    }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "#graphql\n    mutation Login($input: LoginUserInput!) {\n        login(input: $input) {\n            id\n            profileImageURL\n            email\n            username\n            fullName\n            isVerified\n        }\n    }\n"): (typeof documents)["#graphql\n    mutation Login($input: LoginUserInput!) {\n        login(input: $input) {\n            id\n            profileImageURL\n            email\n            username\n            fullName\n            isVerified\n        }\n    }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "#graphql\n    mutation Logout {\n        logout\n    }\n"): (typeof documents)["#graphql\n    mutation Logout {\n        logout\n    }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "#graphql\n    mutation VerifyEmail($input: VerifyEmailInput!) {\n        verifyEmail(input: $input) {\n            id\n            profileImageURL\n            email\n            username\n            fullName\n            isVerified\n        }\n    }\n"): (typeof documents)["#graphql\n    mutation VerifyEmail($input: VerifyEmailInput!) {\n        verifyEmail(input: $input) {\n            id\n            profileImageURL\n            email\n            username\n            fullName\n            isVerified\n        }\n    }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "#graphql\n    mutation ForgotPassword($input: ForgotPasswordInput!) {\n        forgotPassword(input: $input)\n    }\n"): (typeof documents)["#graphql\n    mutation ForgotPassword($input: ForgotPasswordInput!) {\n        forgotPassword(input: $input)\n    }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "#graphql\n    mutation ResetPassword($input: ResetPasswordInput!){       \n        resetPassword(input: $input)\n    }\n"): (typeof documents)["#graphql\n    mutation ResetPassword($input: ResetPasswordInput!){       \n        resetPassword(input: $input)\n    }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "#graphql\n    query GetAuthUser {\n        getAuthUser {\n            id\n            profileImageURL\n            email\n            username\n            fullName\n            isVerified\n        }\n    }\n"): (typeof documents)["#graphql\n    query GetAuthUser {\n        getAuthUser {\n            id\n            profileImageURL\n            email\n            username\n            fullName\n            isVerified\n        }\n    }\n"];
 
 export function graphql(source: string) {
   return (documents as any)[source] ?? {};
