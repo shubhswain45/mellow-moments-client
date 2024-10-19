@@ -66,3 +66,9 @@ export const resetPasswordMutation = graphql(`#graphql
         resetPassword(input: $input)
     }
 `)
+
+export const resendVerificationTokenMutation = graphql(`#graphql
+    mutation ResendVerificationToken($email: String!) {
+        resendVerificationToken(email: $email)
+    }
+`)

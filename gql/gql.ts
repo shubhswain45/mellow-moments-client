@@ -21,6 +21,7 @@ const documents = {
     "#graphql\n    mutation VerifyEmail($input: VerifyEmailInput!) {\n        verifyEmail(input: $input) {\n            id\n            profileImageURL\n            email\n            username\n            fullName\n            isVerified\n        }\n    }\n": types.VerifyEmailDocument,
     "#graphql\n    mutation ForgotPassword($input: ForgotPasswordInput!) {\n        forgotPassword(input: $input)\n    }\n": types.ForgotPasswordDocument,
     "#graphql\n    mutation ResetPassword($input: ResetPasswordInput!){       \n        resetPassword(input: $input)\n    }\n": types.ResetPasswordDocument,
+    "#graphql\n    mutation ResendVerificationToken($email: String!) {\n        resendVerificationToken(email: $email)\n    }\n": types.ResendVerificationTokenDocument,
     "#graphql\n    query GetAuthUser {\n        getAuthUser {\n            id\n            profileImageURL\n            email\n            username\n            fullName\n            isVerified\n        }\n    }\n": types.GetAuthUserDocument,
 };
 
@@ -66,6 +67,10 @@ export function graphql(source: "#graphql\n    mutation ForgotPassword($input: F
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(source: "#graphql\n    mutation ResetPassword($input: ResetPasswordInput!){       \n        resetPassword(input: $input)\n    }\n"): (typeof documents)["#graphql\n    mutation ResetPassword($input: ResetPasswordInput!){       \n        resetPassword(input: $input)\n    }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "#graphql\n    mutation ResendVerificationToken($email: String!) {\n        resendVerificationToken(email: $email)\n    }\n"): (typeof documents)["#graphql\n    mutation ResendVerificationToken($email: String!) {\n        resendVerificationToken(email: $email)\n    }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

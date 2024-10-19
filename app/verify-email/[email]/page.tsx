@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 import { useParams, useRouter } from "next/navigation";
 import { Flex, Spinner } from "@chakra-ui/react";
 import { NoUnusedFragmentsRule } from "graphql";
-import { useGetAuthUser, useVerifyEmail } from "@/hooks/auth";
+import { useGetAuthUser, useResendVerificationToken, useVerifyEmail } from "@/hooks/auth";
 
 const EmailVerificationPage: React.FC = () => {
     // State variables
@@ -16,6 +16,7 @@ const EmailVerificationPage: React.FC = () => {
     // Hooks for authentication and verification
     const { data, isLoading } = useGetAuthUser();
     const { mutate: verifyEmail, isPending } = useVerifyEmail();
+    const { mutate: resendVerificationToken, isPending: isSendingVerificationToken } = useResendVerificationToken()
     const { email: encodedEmail } = useParams<{ email: string | string[] }>();
 
     // Ensure email is a string
@@ -64,6 +65,18 @@ const EmailVerificationPage: React.FC = () => {
         }
     };
 
+    const handleResendClick = async () => {
+        try {
+            resendVerificationToken(decodedEmail)
+        } catch (error: unknown) {
+            if (error instanceof Error) {
+                console.error(error.message);
+            } else {
+                console.error("An unexpected error occurred");
+            }
+        }
+    };
+
     // Focus the next input after pasting or filling in
     const focusNextInput = (newCode: string[]) => {
         const lastFilledIndex = newCode.findLastIndex((digit) => digit !== "");
@@ -98,8 +111,24 @@ const EmailVerificationPage: React.FC = () => {
                 >
                     <h2 className="text-3xl font-bold mb-6 text-center text-white">Verify Your Email</h2>
                     <p className="text-center text-gray-300 mb-6">Enter the 6-digit code sent to your email address.</p>
-                    <p className="text-center text-gray-300 mb-6">This code is only valid for 1 hours</p>
-                
+                    <p className="text-center text-gray-300 mb-6">
+                        This code is only valid for 1 hour
+                        {isSendingVerificationToken ? (
+                            <span className="ml-2">
+                                <Spinner size="xs" color="blue.500" />
+                            </span>
+                        ) : (
+                            <span
+                                className="text-blue-500 cursor-pointer"
+                                onClick={handleResendClick}
+                            >
+                                {" "}
+                                (Resend)
+                            </span>
+                        )}
+                    </p>
+
+
                     <div className="space-y-6">
                         <div className="flex justify-between">
                             {code.map((digit, index) => (

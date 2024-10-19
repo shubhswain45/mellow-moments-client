@@ -1,6 +1,6 @@
 import { graphQLClient } from "@/clients/api"
 import { ForgotPasswordInput, LoginUserInput, ResetPasswordInput, SignupUserInput, VerifyEmailInput } from "@/gql/graphql"
-import { forgotPasswordMutation, loginMutation, loginWithGoogleMutation, logoutMutation, resetPasswordMutation, signupMutation, verifyEmailMutation } from "@/graphql/mutation/auth"
+import { forgotPasswordMutation, loginMutation, loginWithGoogleMutation, logoutMutation, resendVerificationTokenMutation, resetPasswordMutation, signupMutation, verifyEmailMutation } from "@/graphql/mutation/auth"
 import { getAuthUserQuery } from "@/graphql/query/auth"
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import { useRouter } from "next/navigation"
@@ -123,7 +123,12 @@ export const useLogin = () => {
                 getAuthUser: data
             }));
 
-            toast.success("Login successful!");
+            if (!data?.isVerified) {
+                toast.success("You need to verify this email first!");
+                router.replace(`/verify-email/${data?.email}`)
+            } else {
+                toast.success("Login successful!");
+            }
         },
 
         onError: (error: any) => {
@@ -216,7 +221,7 @@ export const useResetPassword = () => {
             if (input.newPassword.length < 6) {
                 throw new Error("Password must be at least 6 characters long.");
             }
-            
+
             try {
                 const { resetPassword } = await graphQLClient.request(resetPasswordMutation, { input });
                 return resetPassword;
@@ -228,6 +233,32 @@ export const useResetPassword = () => {
 
         onSuccess: (data) => {
             toast.success("Reset password successful!");
+        },
+
+        onError: (error) => {
+            const errorMessage = error.message.split(':').pop()?.trim() || "Something went wrong";
+            toast.error(errorMessage);
+        }
+    });
+}
+
+
+export const useResendVerificationToken = () => {
+    return useMutation({
+        mutationFn: async (email: string) => {
+            console.log("email", email);
+            
+            try {
+                const { resendVerificationToken } = await graphQLClient.request(resendVerificationTokenMutation, { email });
+                return resendVerificationToken;
+            } catch (error: any) {
+                // Throw only the error message for concise output
+                throw new Error(error?.response?.errors?.[0]?.message || "Something went wrong");
+            }
+        },
+
+        onSuccess: (data) => {
+            toast.success("Send Resend Verification Token Successful!");
         },
 
         onError: (error) => {

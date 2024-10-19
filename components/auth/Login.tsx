@@ -21,7 +21,7 @@ import {
 import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
 import { CredentialResponse, GoogleLogin } from '@react-oauth/google';
 import Link from 'next/link';
-import { useLogin } from '@/hooks/auth';
+import { useLogin, useLoginWithGoogle } from '@/hooks/auth';
 
 const Login = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => void; }) => {
     const [formData, setFormData] = useState({
@@ -31,6 +31,7 @@ const Login = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => void; }) =
     const [showPassword, setShowPassword] = useState(false);
 
     const { mutate: login, isPending } = useLogin();
+    const { mutate: loginWithGoogle } = useLoginWithGoogle()
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
@@ -46,8 +47,7 @@ const Login = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => void; }) =
     };
 
     const handleLoginSuccess = (cred: CredentialResponse) => {
-        console.log(cred);
-        // Handle successful Google login (e.g., saving tokens)
+        loginWithGoogle(cred.credential || "")
     };
 
     return (
@@ -119,18 +119,18 @@ const Login = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => void; }) =
                     </form>
                 </ModalBody>
                 <ModalFooter bg="#111827">
-                        <Button
-                            bg="#e1e3e2"
-                            textColor="black"
-                            onClick={handleLogin}
-                            w="100%"
-                            borderRadius="full"
-                            _hover={{ bg: "#c2c2c2" }}
-                            isLoading={isPending}
-                            disabled={isPending}
-                        >
-                            Login
-                        </Button>
+                    <Button
+                        bg="#e1e3e2"
+                        textColor="black"
+                        onClick={handleLogin}
+                        w="100%"
+                        borderRadius="full"
+                        _hover={{ bg: "#c2c2c2" }}
+                        isLoading={isPending}
+                        disabled={isPending}
+                    >
+                        Login
+                    </Button>
                 </ModalFooter>
             </ModalContent>
         </Modal>
