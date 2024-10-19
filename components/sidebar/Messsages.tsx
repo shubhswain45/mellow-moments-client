@@ -26,7 +26,7 @@ const Messages = () => {
                     p={2}
                     w={{ base: 10, md: "full" }}
                     justifyContent={{ base: "center", md: "flex-start" }}
-                    ml={{ base: "5px", md: "6px" }}
+                    ml={{ base: "5px", md: "8px" }}
 
                 >
                     <IoChatbubbleEllipsesOutline size={20} />
