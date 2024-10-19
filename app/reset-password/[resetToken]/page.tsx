@@ -1,15 +1,18 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { Input } from "@chakra-ui/react";
-import { useResetPassword } from "@/hooks/auth";
-import { useParams } from "next/navigation";
+import { Flex, Input, Spinner } from "@chakra-ui/react";
+import { useGetAuthUser, useResetPassword } from "@/hooks/auth";
+import { useParams, useRouter } from "next/navigation";
 
 const ResetPasswordPage = () => {
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
 
+    const router = useRouter()
+    const { data, isLoading } = useGetAuthUser();
     const { mutate: resetPassword, isPending } = useResetPassword();
+
 
     const { resetToken } = useParams();
     const token = Array.isArray(resetToken) ? resetToken[0] : resetToken;
@@ -19,6 +22,21 @@ const ResetPasswordPage = () => {
         resetPassword({ token, newPassword: password, confirmPassword });
     };
 
+    // Redirect if the user is already verified
+    useEffect(() => {
+        if (data?.getAuthUser && !isLoading && data?.getAuthUser.isVerified) {
+            router.replace("/home"); // Redirect to home
+        }
+    }, [data, isLoading, router]);
+
+    // Show loading spinner while user data is loading or redirecting
+    if (isLoading || (data?.getAuthUser && data?.getAuthUser.isVerified)) {
+        return (
+            <Flex minH="100vh" justifyContent="center" alignItems="center">
+                <Spinner size="xl" color="teal.500" />
+            </Flex>
+        );
+    }
     return (
         <div className="min-h-screen flex items-center justify-center relative overflow-hidden">
             <motion.div

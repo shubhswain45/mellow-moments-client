@@ -1,6 +1,9 @@
 "use client"
+import FeedPosts from '@/components/home/feedpost/FeedPosts';
+import SuggestedUsers from '@/components/home/suggesteduser/SuggestedUsers';
 import { useGetAuthUser } from '@/hooks/auth';
-import { Flex, Spinner } from '@chakra-ui/react';
+import PageLayout from '@/pageLayout/PageLayout';
+import { Box, Container, Flex, Spinner } from '@chakra-ui/react';
 import { useRouter } from 'next/navigation';
 import React, { useEffect } from 'react'
 
@@ -23,8 +26,19 @@ function HomePage() {
     );
   }
   return (
-    <div>HomePage</div>
-  )
+    <PageLayout>
+      <Container maxW={"container.lg"}>
+        <Flex gap={20}>
+          <Box flex={2} py={10}>
+            <FeedPosts />
+          </Box>
+          <Box flex={3} mr={20} display={{ base: "none", lg: "block" }} maxW={"300px"}>
+            <SuggestedUsers />
+          </Box>
+        </Flex>
+      </Container>
+    </PageLayout>
+  );
 }
 
 export default HomePage

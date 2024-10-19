@@ -2,14 +2,18 @@
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { ArrowLeft, Loader, Mail } from "lucide-react";
-import { Input } from "@chakra-ui/react";
+import { Flex, Input, Spinner } from "@chakra-ui/react";
 import Link from "next/link";
-import { useForgotPassword } from "@/hooks/auth";
+import { useForgotPassword, useGetAuthUser } from "@/hooks/auth";
+import { useRouter } from "next/navigation";
 
 
 const ForgotPasswordPage = () => {
     const [emailOrUsername, setEmail] = useState("");
     const [isSubmitted, setIsSubmitted] = useState(false);
+    const router = useRouter()
+
+    const { data, isLoading } = useGetAuthUser();
     const { mutate: forgotPassword, isPending, isSuccess } = useForgotPassword();
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -26,6 +30,22 @@ const ForgotPasswordPage = () => {
             setIsSubmitted(true);
         }
     }, [isSuccess])
+
+    // Redirect if the user is already verified
+    useEffect(() => {
+        if (data?.getAuthUser && !isLoading && data?.getAuthUser.isVerified) {
+            router.replace("/home"); // Redirect to home
+        }
+    }, [data, isLoading, router]);
+
+    // Show loading spinner while user data is loading or redirecting
+    if (isLoading || (data?.getAuthUser && data?.getAuthUser.isVerified)) {
+        return (
+            <Flex minH="100vh" justifyContent="center" alignItems="center">
+                <Spinner size="xl" color="teal.500" />
+            </Flex>
+        );
+    }
 
     return (
         <div className="min-h-screen flex items-center justify-center relative overflow-hidden">
