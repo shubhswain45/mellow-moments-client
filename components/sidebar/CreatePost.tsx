@@ -17,7 +17,7 @@ const CreatePost = () => {
 
     const handleSubmit = () => {
             // Call createPost with caption and image
-            createPost({ content, imageURL: selectedFile || "" });
+            createPost({ content, imgURL: selectedFile || "" });
             // Reset the states after submission
             setContent("");
             setSelectedFile(null);

@@ -7,9 +7,7 @@ import toast from "react-hot-toast";
 export const useCreatePost = () => {
     return useMutation({
         mutationFn: async (input: CreatePostInput) => {
-            try {
-                console.log("input", input);
-                
+            try {                
                 const { createPost } = await graphQLClient.request(createPostMutation, { input });
                 return createPost;
             } catch (error: any) {

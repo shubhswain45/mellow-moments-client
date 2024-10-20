@@ -24,6 +24,7 @@ const documents = {
     "#graphql\n    mutation ResendVerificationToken($email: String!) {\n        resendVerificationToken(email: $email)\n    }\n": types.ResendVerificationTokenDocument,
     "#graphql\n    mutation CreatePost($input: CreatePostInput!) {\n        createPost(input: $input) {\n            id\n        }\n    }\n": types.CreatePostDocument,
     "#graphql\n    query GetAuthUser {\n        getAuthUser {\n            id\n            profileImageURL\n            email\n            username\n            fullName\n            isVerified\n        }\n    }\n": types.GetAuthUserDocument,
+    "#graphql\n    query GetUserPosts($input: GetUserPostsInput!) {\n        getUserPosts(input: $input) {\n            id\n            content\n            imgURL  \n        }\n    }\n": types.GetUserPostsDocument,
 };
 
 /**
@@ -80,6 +81,10 @@ export function graphql(source: "#graphql\n    mutation CreatePost($input: Creat
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(source: "#graphql\n    query GetAuthUser {\n        getAuthUser {\n            id\n            profileImageURL\n            email\n            username\n            fullName\n            isVerified\n        }\n    }\n"): (typeof documents)["#graphql\n    query GetAuthUser {\n        getAuthUser {\n            id\n            profileImageURL\n            email\n            username\n            fullName\n            isVerified\n        }\n    }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "#graphql\n    query GetUserPosts($input: GetUserPostsInput!) {\n        getUserPosts(input: $input) {\n            id\n            content\n            imgURL  \n        }\n    }\n"): (typeof documents)["#graphql\n    query GetUserPosts($input: GetUserPostsInput!) {\n        getUserPosts(input: $input) {\n            id\n            content\n            imgURL  \n        }\n    }\n"];
 
 export function graphql(source: string) {
   return (documents as any)[source] ?? {};
