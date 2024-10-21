@@ -43,8 +43,8 @@ const SuggestedUsers = () => {
       )}
 
       {/* Hardcoded suggested users */}
-      {suggestedUsers.map((_) => (
-        <SuggestedUser/>
+      {suggestedUsers.map((user) => (
+        <SuggestedUser key={user.id}/>
       ))}
 
       <Box fontSize={12} color={"gray.500"} mt={5} alignSelf={"start"}>

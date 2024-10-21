@@ -3,11 +3,11 @@ import { Avatar, Box, Button, Flex, Skeleton, SkeletonCircle } from "@chakra-ui/
 
 const PostHeader = () => {
   // Hardcoded data
-  const post = {
-    id: "post1",
-    createdBy: "user123",
-    createdAt: new Date("2023-10-01T12:00:00Z"), // Hardcoded creation date
-  };
+  // const post = {
+  //   id: "post1",
+  //   createdBy: "user123",
+  //   createdAt: new Date("2023-10-01T12:00:00Z"), // Hardcoded creation date
+  // };
 
   const creatorProfile = {
     username: "john_doe",

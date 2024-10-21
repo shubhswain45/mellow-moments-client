@@ -70,7 +70,7 @@ const ProfilePosts = () => {
                 ))}
 
             {!isLoading && posts.map((post) => (
-                <ProfilePost key={post?.id} post={post}/> // Pass post data to the ProfilePost component
+                <ProfilePost key={post?.id}/> // Pass post data to the ProfilePost component
             ))}
         </Grid>
     );

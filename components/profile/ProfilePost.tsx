@@ -24,21 +24,21 @@ import { useState } from "react";
 
 const ProfilePost = () => {
     const { isOpen, onOpen, onClose } = useDisclosure();
-    const [isDeleting, setIsDeleting] = useState(false);
+    // const [setIsDeleting] = useState(false);
 
     const dummyComments = Array.from({ length: 10 }, (_, index) => ({
         id: index + 1,
         text: `This is comment number ${index + 1}`,
     }));
 
-    const handleDeletePost = async () => {
-        if (!window.confirm("Are you sure you want to delete this post?")) return;
-        setIsDeleting(true);
-        setTimeout(() => {
-            setIsDeleting(false);
-            alert("Post deleted");
-        }, 1000);
-    };
+    // const handleDeletePost = async () => {
+    //     if (!window.confirm("Are you sure you want to delete this post?")) return;
+    //     // setIsDeleting(true);
+    //     // setTimeout(() => {
+    //     //     setIsDeleting(false);
+    //     //     alert("Post deleted");
+    //     // }, 1000);
+    // };
 
     return (
         <>
