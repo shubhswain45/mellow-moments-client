@@ -15,11 +15,11 @@ const EmailVerificationPage: React.FC = () => {
     // Hooks for authentication and verification
     const { data, isLoading } = useGetAuthUser();
     const { mutate: verifyEmail, isPending } = useVerifyEmail();
-    const { mutate: resendVerificationToken, isPending: isSendingVerificationToken } = useResendVerificationToken()
+    const { mutate: resendVerificationToken, isPending: isSendingVerificationToken } = useResendVerificationToken();
     const { email: encodedEmail } = useParams<{ email: string | string[] }>();
 
     // Ensure email is a string
-    const email = Array.isArray(encodedEmail) ? encodedEmail[0] : encodedEmail; // Take the first string if it's an array
+    const email = Array.isArray(encodedEmail) ? encodedEmail[0] : encodedEmail;
     const decodedEmail = decodeURIComponent(email); // Decode the email parameter
 
     // Handle input changes for the verification code
@@ -54,7 +54,7 @@ const EmailVerificationPage: React.FC = () => {
     const handleVerifyClick = async () => {
         const verificationCode = code.join("");
         try {
-            verifyEmail({ code: verificationCode, email: decodedEmail }); // Use decoded email
+            verifyEmail({ code: verificationCode, email: decodedEmail });
         } catch (error: unknown) {
             if (error instanceof Error) {
                 console.error(error.message);
@@ -66,7 +66,7 @@ const EmailVerificationPage: React.FC = () => {
 
     const handleResendClick = async () => {
         try {
-            resendVerificationToken(decodedEmail)
+            resendVerificationToken(decodedEmail);
         } catch (error: unknown) {
             if (error instanceof Error) {
                 console.error(error.message);
@@ -101,7 +101,7 @@ const EmailVerificationPage: React.FC = () => {
 
     return (
         <div className="min-h-screen flex items-center justify-center relative overflow-hidden">
-            <div className="max-w-md w-full rounded-lg overflow-hidden bg-[#161617]" >
+            <div className="max-w-md w-full rounded-lg overflow-hidden bg-[#161617]">
                 <motion.div
                     initial={{ opacity: 0, y: -50 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -109,7 +109,9 @@ const EmailVerificationPage: React.FC = () => {
                     className="p-8 w-full max-w-md"
                 >
                     <h2 className="text-3xl font-bold mb-6 text-center text-white">Verify Your Email</h2>
-                    <p className="text-center text-gray-300 mb-6">Enter the 6-digit code sent to your email address.</p>
+                    <p className="text-center text-gray-300 mb-6">
+                        Enter the 6-digit code sent to your email address.
+                    </p>
                     <p className="text-center text-gray-300 mb-6">
                         This code is only valid for 1 hour
                         {isSendingVerificationToken ? (
@@ -121,19 +123,19 @@ const EmailVerificationPage: React.FC = () => {
                                 className="text-blue-500 cursor-pointer"
                                 onClick={handleResendClick}
                             >
-                                {" "}
-                                (Resend)
+                                {" "} (Resend)
                             </span>
                         )}
                     </p>
-
 
                     <div className="space-y-6">
                         <div className="flex justify-between">
                             {code.map((digit, index) => (
                                 <input
                                     key={index}
-                                    ref={(el) => (inputRefs.current[index] = el)} // Assign ref directly with typing
+                                    ref={(el) => {
+                                        inputRefs.current[index] = el;
+                                    }} // Assign ref without returning anything
                                     type="text"
                                     value={digit}
                                     onChange={(e) => handleChange(index, e.target.value)}
@@ -157,6 +159,5 @@ const EmailVerificationPage: React.FC = () => {
         </div>
     );
 };
-
 
 export default EmailVerificationPage;
