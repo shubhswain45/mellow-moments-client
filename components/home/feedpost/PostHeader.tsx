@@ -24,12 +24,12 @@ const PostHeader = () => {
   };
 
   // Dummy timeAgo function
-  const timeAgo = (date:any) => {
-    const now = new Date();
-    const diffInMs = now.getTime() - new Date(date).getTime();
-    const diffInHours = Math.floor(diffInMs / (1000 * 60 * 60));
-    return `${diffInHours} hours ago`; // Simplified hardcoded time ago function
-  };
+  // const timeAgo = (date:any) => {
+  //   const now = new Date();
+  //   const diffInMs = now.getTime() - new Date(date).getTime();
+  //   const diffInHours = Math.floor(diffInMs / (1000 * 60 * 60));
+  //   return `${diffInHours} hours ago`; // Simplified hardcoded time ago function
+  // };
 
   return (
     <Flex justifyContent={"space-between"} alignItems={"center"} w={"full"} my={2}>
@@ -51,7 +51,7 @@ const PostHeader = () => {
             <Skeleton w={"100px"} h={"10px"} />
           )}
 
-          <Box color={"gray.500"}>• {timeAgo(post.createdAt)}</Box>
+          <Box color={"gray.500"}>• 1d ago</Box>
         </Flex>
       </Flex>
       <Box cursor={"pointer"}>

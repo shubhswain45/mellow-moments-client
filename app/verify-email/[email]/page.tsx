@@ -4,7 +4,6 @@ import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { useParams, useRouter } from "next/navigation";
 import { Flex, Spinner } from "@chakra-ui/react";
-import { NoUnusedFragmentsRule } from "graphql";
 import { useGetAuthUser, useResendVerificationToken, useVerifyEmail } from "@/hooks/auth";
 
 const EmailVerificationPage: React.FC = () => {

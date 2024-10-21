@@ -1,4 +1,4 @@
-import { Box, Flex, Grid, GridItem, Skeleton, Text, VStack } from "@chakra-ui/react";
+import { Box, Flex, Grid, GridItem, Skeleton, Text } from "@chakra-ui/react";
 import ProfilePost from "./ProfilePost";
 import { useQuery } from "@tanstack/react-query";
 import { graphQLClient } from "@/clients/api";

@@ -20,13 +20,9 @@ import { FaComment } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
 import { useState } from "react";
 
-interface ProfilePostProps {
-	id: string
-	content: string
-	imgURL: string
-}
 
-const ProfilePost = ({ post }: ProfilePostProps) => {
+
+const ProfilePost = () => {
     const { isOpen, onOpen, onClose } = useDisclosure();
     const [isDeleting, setIsDeleting] = useState(false);
 
@@ -84,7 +80,7 @@ const ProfilePost = ({ post }: ProfilePostProps) => {
                         </Flex>
                     </Flex>
                 </Flex>
-                <Image src={post.imgURL} objectFit={"cover"} h={"100%"} w={"100%"} />
+                <Image src={""} objectFit={"cover"} h={"100%"} w={"100%"} />
             </GridItem>
 
             <Modal isOpen={isOpen} onClose={onClose} isCentered={true} size={{ base: "3xl", md: "5xl" }}>
@@ -110,7 +106,7 @@ const ProfilePost = ({ post }: ProfilePostProps) => {
 								mx={"auto"}
                             >
                                 <Image 
-                                    src={post.imgURL}  
+                                    src={""}  
                                     maxH={"600px"} 
                                     maxW={"100%"} 
                                     mx={'auto'} 

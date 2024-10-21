@@ -1,6 +1,6 @@
 import { Box, Flex, Tooltip } from "@chakra-ui/react";
 import Link from "next/link";
-import { IoIosNotifications } from "react-icons/io";
+// import { IoIosNotifications } from "react-icons/io";
 import { RiNotification2Line } from "react-icons/ri";
 
 

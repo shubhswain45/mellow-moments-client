@@ -3,7 +3,7 @@ import ProfileHeader from "@/components/profile/ProfileHeader";
 import ProfilePosts from "@/components/profile/ProfilePosts";
 import ProfileTabs from "@/components/profile/ProfileTabs";
 import PageLayout from "@/pageLayout/PageLayout";
-import { Container, Flex, Link, Skeleton, SkeletonCircle, Text, VStack } from "@chakra-ui/react";
+import { Container, Flex, Skeleton, SkeletonCircle, Text, VStack } from "@chakra-ui/react";
 
 const ProfilePage = () => {
     // Hardcoded data

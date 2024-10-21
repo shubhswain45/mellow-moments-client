@@ -1,6 +1,6 @@
 import { Box, Flex, Tooltip } from "@chakra-ui/react";
 import Link from "next/link";
-import { AiFillHome, AiOutlineHome } from "react-icons/ai";
+// import { AiFillHome, AiOutlineHome } from "react-icons/ai";
 import { GoHome } from "react-icons/go";
 // import { Link as RouterLink } from "react-router-dom";
 

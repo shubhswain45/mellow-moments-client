@@ -16,7 +16,7 @@ import {
 	Stack,
 } from "@chakra-ui/react";
 
-const EditProfile = ({ isOpen, onClose }: {isOpen: boolean, onClose: any}) => {
+const EditProfile = ({ isOpen, onClose }: {isOpen: boolean, onClose: () => void}) => {
 	return (
 		<>
 			<Modal isOpen={isOpen} onClose={onClose}>

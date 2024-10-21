@@ -43,7 +43,7 @@ const SuggestedUsers = () => {
       )}
 
       {/* Hardcoded suggested users */}
-      {suggestedUsers.map((user) => (
+      {suggestedUsers.map((_) => (
         <SuggestedUser/>
       ))}
 

@@ -1,5 +1,5 @@
 import { Box, Button, Flex, Text, Tooltip } from "@chakra-ui/react";
-import Link from "next/link";
+// import Link from "next/link";
 import SidebarItems from "./SidebarItems";
 import { BiLogOut } from "react-icons/bi";
 

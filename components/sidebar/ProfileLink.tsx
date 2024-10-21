@@ -1,4 +1,4 @@
-import { Avatar, Box, Link, Tooltip } from "@chakra-ui/react";
+import { Avatar, Box, Tooltip } from "@chakra-ui/react";
 
 
 const ProfileLink = () => {

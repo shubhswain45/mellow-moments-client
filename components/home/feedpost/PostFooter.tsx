@@ -34,7 +34,7 @@ import {
     const [isLiked, setIsLiked] = useState(false);
     const [comment, setComment] = useState("");
     const commentRef = useRef<HTMLInputElement>(null);
-    const { isOpen, onOpen, onClose } = useDisclosure();
+    const { onOpen } = useDisclosure();
   
     // Event handlers
     const handleLikePost = () => {
