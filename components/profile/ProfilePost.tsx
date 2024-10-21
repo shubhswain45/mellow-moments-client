@@ -20,7 +20,13 @@ import { FaComment } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
 import { useState } from "react";
 
-const ProfilePost = ({ post }) => {
+interface ProfilePostProps {
+	id: string
+	content: string
+	imgURL: string
+}
+
+const ProfilePost = ({ post }: ProfilePostProps) => {
     const { isOpen, onOpen, onClose } = useDisclosure();
     const [isDeleting, setIsDeleting] = useState(false);
 
